@@ -19,7 +19,8 @@ class ListNode {
 class Solution {
 	public static ListNode reverseKGroup(ListNode head, int k) {
 		int size = 0;
-		ListNode cur = head, next = head.next, prev = null, result = null, before = null, prevBefore;
+		ListNode cur = head, next = head.next, prev = null, before = null, prevBefore;
+		boolean flag = false;
 		// o(size)
 		while (cur != null) {
 			size++;
@@ -36,8 +37,10 @@ class Solution {
 				cur.next = prev;
 				prev = cur;
 				cur = next;
-				if (j == k - 1 && result == null)
-					result = prev;
+				if (j == k - 1 && !flag) {
+					head = prev;
+					flag = true;
+				}
 				if (j == k - 1 && i != 0)
 					prevBefore.next = prev;
 
@@ -46,8 +49,8 @@ class Solution {
 		if (size % k != 0)
 			before.next = cur;
 		else
-			before.next = null; //avoiding cycle
+			before.next = null;
 
-		return result;
+		return head;
 	}
 }
